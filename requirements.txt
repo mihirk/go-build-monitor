@@ -15,7 +15,6 @@ oauthlib==0.6.0
 pep8==1.4.6
 polib==1.0.3
 psycopg2==2.0.14
-pyPdf==1.13
 pycurl==7.19.0
 requests==1.2.3
 requests-oauthlib==0.3.3
