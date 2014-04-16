@@ -10,7 +10,6 @@ django-toolbelt==0.0.1
 filebrowser-safe==0.2.31
 grappelli-safe==0.2.23
 gunicorn==18.0
-gyp==0.1
 html5lib==0.95
 oauthlib==0.6.0
 pep8==1.4.6
