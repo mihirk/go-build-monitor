@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="/getbuilds/" method="post">
+        {% csrf_token %}
+        {{ build_form.as_p }}
+        <input type="submit" value="Submit"/>
+    </form>
+</body>
+</html>
