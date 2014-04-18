@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from threading import Timer
 import time
-from logic.scheduler import download_cctray_xml
+from logic.http_utils import download_cctray_xml
 from logic.xml_parser import *
 from forms import ConfigurationForm, BuildForm
 

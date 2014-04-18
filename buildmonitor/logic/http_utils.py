@@ -4,7 +4,7 @@ import urllib2
 import base64
 import httplib
 
-from xml_parser import get_builds_to_monitor_from_xml, read_file, get_builds_to_monitor
+from xml_parser import  get_builds_to_monitor
 
 
 poll_scheduler = sched.scheduler(time.time, time.sleep)
@@ -57,27 +57,3 @@ def download_cctray_xml(url, username, password, file_name):
         return 1
     else:
         return None
-
-def read_config(config_file_name):
-    config = read_file(config_file_name)
-    config_array = config.split("\n")
-    return config_array[0], config_array[1], config_array[2]
-
-
-def controller():
-    download_url, username, password = read_config("config")
-    download_cctray_xml(download_url, username, password, file_name="cctray.xml")
-    builds_to_monitor = get_builds_to_monitor_from_xml('cctray.xml', 'builds_to_monitor')
-    for build in builds_to_monitor:
-        current_build_status[str(build['name'])] = str(build['lastBuildStatus'])
-    return current_build_status
-
-
-def scheduler_minute(scheduler_local):
-    controller()
-    for build_name in current_build_status.keys():
-        if (current_build_status[build_name] == "Success"):
-            print "Success"
-        else:
-            pass
-    scheduler_local.enter(1, 1, scheduler_minute, (scheduler_local, ))
