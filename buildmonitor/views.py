@@ -27,7 +27,7 @@ def configuration_page(request, template='configuration.html'):
 
 
 def get_file_name_per_session(request):
-    return str(request.session._get_session_key()) + '.xml'
+    return "cctrays/" +str(request.session._get_session_key()) + '.xml'
 
 
 def set_session_with_build_handles(build_names, request):
