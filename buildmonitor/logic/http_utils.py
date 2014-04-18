@@ -35,25 +35,25 @@ def get_cctray_xml(password=None, url=None, username=None):
     try:
         cctray = urllib2.urlopen(request)
     except urllib2.HTTPError, e:
-        return None
+        return "Invalid Configuration : HTTPError - " + str(e.code)
     except urllib2.URLError, e:
-        return None
+        return "Invalid Configuration : URLError - " + str(e.reason)
     except httplib.HTTPException, e:
-        return None
+        return "Invalid Configuration : HTTPException"
     except Exception:
-        return None
+        return "Invalid Configuration : Exception"
     return cctray
 
 
 def download_cctray_xml(url, username, password, file_name):
     if(url[-4:] != ".xml"):
-        return None
+        return "Give the cctray url ending with .xml"
     if(username and password):
         cctray = get_cctray_xml(password, url, username)
     else:
         cctray = get_cctray_xml(url=url)
-    if(cctray):
-        save_cctray(cctray, file_name)
-        return 1
+    if("Invalid Configuration : " in cctray):
+        return cctray
     else:
-        return None
+        save_cctray(cctray, file_name)
+        return "Success"

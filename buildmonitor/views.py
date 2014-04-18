@@ -43,7 +43,8 @@ def get_config_from_session(request):
 
 def get_builds(request, template='build_list.html'):
     password, pipeline_url, username = get_config_from_session(request)
-    if(download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))):
+    status = download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))
+    if(status == "Success"):
         all_builds = read_build_names_from_xml(get_file_name_per_session(request))
         if request.method == "POST":
             build_form = BuildForm(all_builds=all_builds, data=request.POST)
@@ -56,7 +57,8 @@ def get_builds(request, template='build_list.html'):
         return render(request, template, {"all_builds": all_builds, "build_form": build_form},
                   context_instance=RequestContext(request))
     else:
-        return render(request, "invalid.html")
+        print status
+        return render(request, "invalid.html", {"error": status})
 
 
 def poll_builds(request):
