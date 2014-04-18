@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 <head>
     <title>Build Status</title>
-    <META HTTP-EQUIV="refresh" CONTENT="5;URL=../buffer/">
+    <META HTTP-EQUIV="refresh" CONTENT="120;URL=../buffer/">
 </head>
-<body {% if status %}bgcolor="#FF0000"{% else %}bgcolor="#008000"{% endif %}>
+<body style="height: 100%;">
+
+    {% for build in build_handles %}
+        <div style="height:{{div_height}}%;overflow: hidden;border-style:solid;border-width: 1px; background-color:{% ifequal build.status "Success" %}#008000{% else %}#FF0000{% endifequal %};">
+            <div style="text-align: center;font-weight:900;font-size: 1em;">{{ build.name }}</div>
+        </div>
+    {% endfor %}
 
 </body>
 </html>

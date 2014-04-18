@@ -5,6 +5,8 @@ from models import Configuration
 
 
 class ConfigurationForm(ModelForm):
+    username = forms.CharField(required=False)
+    password = forms.CharField(required=False, widget=forms.PasswordInput)
     class Meta:
         model = Configuration
         widgets = {

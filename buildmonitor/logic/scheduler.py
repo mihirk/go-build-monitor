@@ -2,6 +2,7 @@ import sched
 import time
 import urllib2
 import base64
+import httplib
 
 from xml_parser import get_builds_to_monitor_from_xml, read_file, get_builds_to_monitor
 
@@ -26,18 +27,36 @@ def save_cctray(cctray, file_name):
     create_file(file_name, cctray.read())
 
 
-def get_cctray_xml(password, url, username):
+def get_cctray_xml(password=None, url=None, username=None):
     request = urllib2.Request(url)
-    base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
-    request.add_header("Authorization", "Basic %s" % base64string)
-    cctray = urllib2.urlopen(request)
+    if(username and password):
+        base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+        request.add_header("Authorization", "Basic %s" % base64string)
+    try:
+        cctray = urllib2.urlopen(request)
+    except urllib2.HTTPError, e:
+        return None
+    except urllib2.URLError, e:
+        return None
+    except httplib.HTTPException, e:
+        return None
+    except Exception:
+        return None
     return cctray
 
 
 def download_cctray_xml(url, username, password, file_name):
-    cctray = get_cctray_xml(password, url, username)
-    save_cctray(cctray, file_name)
-
+    if(url[-4:] != ".xml"):
+        return None
+    if(username and password):
+        cctray = get_cctray_xml(password, url, username)
+    else:
+        cctray = get_cctray_xml(url=url)
+    if(cctray):
+        save_cctray(cctray, file_name)
+        return 1
+    else:
+        return None
 
 def read_config(config_file_name):
     config = read_file(config_file_name)
@@ -62,10 +81,3 @@ def scheduler_minute(scheduler_local):
         else:
             pass
     scheduler_local.enter(1, 1, scheduler_minute, (scheduler_local, ))
-
-# poll_scheduler.enter(1, 1, scheduler_minute, (poll_scheduler, ))
-# poll_scheduler.run()
-
-
-
-

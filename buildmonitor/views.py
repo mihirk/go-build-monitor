@@ -43,18 +43,20 @@ def get_config_from_session(request):
 
 def get_builds(request, template='build_list.html'):
     password, pipeline_url, username = get_config_from_session(request)
-    download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))
-    all_builds = read_build_names_from_xml(get_file_name_per_session(request))
-    if request.method == "POST":
-        build_form = BuildForm(all_builds=all_builds, data=request.POST)
-        if build_form.is_valid():
-            build_handles = get_attribs_of_builds_to_monitor(build_form.data.getlist('builds'), all_builds)
-            set_session_with_build_handles(build_handles, request)
-            return HttpResponseRedirect('/monitor/')
-    else:
-        build_form = BuildForm(all_builds=all_builds)
-    return render(request, template, {"all_builds": all_builds, "build_form": build_form},
+    if(download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))):
+        all_builds = read_build_names_from_xml(get_file_name_per_session(request))
+        if request.method == "POST":
+            build_form = BuildForm(all_builds=all_builds, data=request.POST)
+            if build_form.is_valid():
+                build_handles = get_attribs_of_builds_to_monitor(build_form.data.getlist('builds'), all_builds)
+                set_session_with_build_handles(build_handles, request)
+                return HttpResponseRedirect('/monitor/')
+        else:
+            build_form = BuildForm(all_builds=all_builds)
+        return render(request, template, {"all_builds": all_builds, "build_form": build_form},
                   context_instance=RequestContext(request))
+    else:
+        return render(request, "invalid.html")
 
 
 def poll_builds(request):
@@ -62,7 +64,6 @@ def poll_builds(request):
     download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))
     build_handles = read_selected_builds_from_xml(get_file_name_per_session(request), request.session.__getitem__('build_handles'))
     set_session_with_build_handles(build_handles, request)
-    print "In Poll"
     return HttpResponseRedirect('/monitor/')
 
 
@@ -73,11 +74,12 @@ def failed_builds(build):
         return True
 
 
+def name_status(build):
+    return {"name": build['name'], "status": build['lastBuildStatus']}
+
+
+
 def show_builds(request, template='monitor.html'):
     build_handles = request.session.__getitem__('build_handles')
-    print "In monitor"
-    if(filter(failed_builds, build_handles)):
-        fail=True
-    else:
-        fail=False
-    return render(request, template, {"status": fail })
+    build_handles = map(name_status, build_handles)
+    return render(request, template, {"build_handles": build_handles, "div_height": 100/build_handles.__len__() })
