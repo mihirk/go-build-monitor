@@ -4,11 +4,18 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 from django.contrib import admin
+from buildmonitor import settings
 from views import configuration_page, get_builds, show_builds, poll_builds
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
+                       (r"^static/(?P<path>.*)$",
+                        "django.views.static.serve",
+                        {"document_root": settings.STATIC_ROOT}), )
+
+
+urlpatterns += patterns('',
                        # Examples:
                        # url(r'^$', 'buildmonitor.views.home', name='home'),
                        # url(r'^buildmonitor/', include('buildmonitor.foo.urls')),

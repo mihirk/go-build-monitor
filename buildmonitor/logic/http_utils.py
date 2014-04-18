@@ -48,12 +48,10 @@ def get_cctray_xml(password=None, url=None, username=None):
 def download_cctray_xml(url, username, password, file_name):
     if(url[-4:] != ".xml"):
         return "Give the cctray url ending with .xml"
-    if(username and password):
+    else:
         cctray = get_cctray_xml(password, url, username)
-    else:
-        cctray = get_cctray_xml(url=url)
-    if("Invalid Configuration : " in cctray):
-        return cctray
-    else:
-        save_cctray(cctray, file_name)
-        return "Success"
+        if("Invalid Configuration : " in str(cctray)):
+            return cctray
+        else:
+            save_cctray(cctray, file_name)
+            return "Success"
