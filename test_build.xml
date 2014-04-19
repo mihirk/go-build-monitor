@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Projects>
+    <Project name="Build One" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="1" lastBuildTime="2014-04-18T19:12:19" webUrl="someUrl" />
+    <Project name="BUild Two" activity="Sleeping" lastBuildStatus="Fail" lastBuildLabel="2" lastBuildTime="2014-04-18T18:25:44" webUrl="someUrl" />
+</Projects>
+
