@@ -2,8 +2,6 @@ import sched
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
-from threading import Timer
-import time
 from logic.http_utils import download_cctray_xml
 from logic.xml_parser import *
 from forms import ConfigurationForm, BuildForm
@@ -18,6 +16,7 @@ def set_session_with_attributes(configuration_form, request):
 def configuration_page(request, template='configuration.html'):
     if request.method == 'POST':
         configuration_form = ConfigurationForm(request.POST)
+        print configuration_form.data
         if configuration_form.is_valid():
             set_session_with_attributes(configuration_form, request)
             return HttpResponseRedirect('/getbuilds/')
@@ -57,7 +56,6 @@ def get_builds(request, template='build_list.html'):
         return render(request, template, {"all_builds": all_builds, "build_form": build_form},
                   context_instance=RequestContext(request))
     else:
-        print status
         return render(request, "invalid.html", {"error": status})
 
 

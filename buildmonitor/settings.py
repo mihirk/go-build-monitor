@@ -121,9 +121,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django_nose',
     'buildmonitor',
 )
 
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",

@@ -5,12 +5,14 @@ from models import Configuration
 
 
 class ConfigurationForm(ModelForm):
-    username = forms.CharField(required=False)
-    password = forms.CharField(required=False, widget=forms.PasswordInput)
+    username = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'username'}))
+    password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'password'}))
     class Meta:
         model = Configuration
         widgets = {
-            'password': forms.PasswordInput(),
+            'password': forms.PasswordInput(attrs={'class': 'password'}),
+            'username': forms.TextInput(attrs={'class': 'username'}),
+            'pipeline_url': forms.TextInput(attrs={'class': 'url'}),
         }
         fields = ['pipeline_url', 'username', 'password']
 
