@@ -1,6 +1,6 @@
 import os
 from django.test import TestCase
-from buildmonitor.buildmonitor.logic.http_utils import create_file, download_cctray_xml, get_cctray_xml
+from logic.http_utils import create_file, download_cctray_xml, get_cctray_xml
 import httpretty
 import os.path
 import shutil
