@@ -1,10 +1,19 @@
 <!DOCTYPE html>
+{% load staticfiles static  %}
 <html>
 <head>
     <title>Build Configuration</title>
-</head>
+    <link href="{% static 'css/jquery.terminal.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.terminal-min.js' %}"></script>
+    <script src="{% static 'js/jquery.mousewheel-min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+    </head>
 <body>
-    <form action="/config/" method="post">
+    <h4>Build Monitor Configuration</h4>
+    <div id="config_form"></div>
+    <form class="form" action="/config/" method="post">
         {% csrf_token %}
         {{ configuration_form.as_p }}
         <input type="submit" value="Submit"/>
