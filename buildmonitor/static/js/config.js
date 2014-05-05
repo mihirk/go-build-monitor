@@ -65,6 +65,7 @@ jQuery(function ($, undefined) {
                 build_config.credentials.username = command;
                 insert_input_data('.username', command);
                 term.set_prompt('Password > ');
+                term.set_mask(true);
             }
             else if (build_config.credentials.password === "") {
                 build_config.credentials.password = command;
