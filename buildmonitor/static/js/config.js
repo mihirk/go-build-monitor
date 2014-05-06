@@ -1,5 +1,4 @@
 jQuery(function ($, undefined) {
-        var input_field = '';
         var term_config = {
             greetings: '',
             name: 'build_monitor',

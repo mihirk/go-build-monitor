@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+{% load staticfiles static  %}
+
 <html>
 <head>
     <title></title>
+    <link href="{% static 'css/jquery.terminal.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.terminal-min.js' %}"></script>
+    <script src="{% static 'js/jquery.mousewheel-min.js' %}"></script>
+    <script src="{% static 'js/getbuilds.js' %}"></script>
 </head>
 <body>
-    <form action="/getbuilds/" method="post">
+    <input type="hidden" id="all_builds" name="all_builds" value="{{ all_builds }}">
+    <h1 id="instructions">Please enter the build names to be monitored, leave blank to submit</h1>
+    <div class="build_list"></div>
+    <div id="build_form"></div>
+    <form class="form" action="/getbuilds/" method="post">
         {% csrf_token %}
         {{ build_form.as_p }}
         <input type="submit" value="Submit"/>

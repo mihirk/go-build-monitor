@@ -20,3 +20,11 @@ body{
 .cmd span {
     color: #F0FFFF;
 }
+
+.build_name:nth-child(odd) {
+    color: #FF00FF;
+}
+
+.build_name:nth-child(even) {
+    color: #00FFFF;
+}
