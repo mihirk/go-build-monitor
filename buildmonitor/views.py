@@ -1,10 +1,12 @@
 import json
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
+
 from logic.http_utils import download_cctray_xml
 from logic.xml_parser import *
-from forms import ConfigurationForm, BuildForm, get_all_build_names
+from forms import ConfigurationForm, BuildForm
 
 
 def set_session_with_attributes(configuration_form, request):
@@ -25,7 +27,7 @@ def configuration_page(request, template='configuration.html'):
 
 
 def get_file_name_per_session(request):
-    return "cctrays/" +str(request.session._get_session_key()) + '.xml'
+    return "cctrays/" + str(request.session._get_session_key()) + '.xml'
 
 
 def set_session_with_build_handles(build_names, request):
@@ -42,7 +44,7 @@ def get_config_from_session(request):
 def get_builds(request, template='build_list.html'):
     password, pipeline_url, username = get_config_from_session(request)
     status = download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))
-    if(status == "Success"):
+    if (status == "Success"):
         all_builds = read_build_names_from_xml(get_file_name_per_session(request))
         if request.method == "POST":
             build_form = BuildForm(all_builds=all_builds, data=request.POST)
@@ -52,8 +54,9 @@ def get_builds(request, template='build_list.html'):
                 return HttpResponseRedirect('/monitor/')
         else:
             build_form = BuildForm(all_builds=all_builds)
-        return render(request, template, {"all_builds": json.dumps(map(get_child_name, all_builds)), "build_form": build_form},
-                  context_instance=RequestContext(request))
+        return render(request, template,
+                      {"all_builds": json.dumps(map(get_child_name, all_builds)), "build_form": build_form},
+                      context_instance=RequestContext(request))
     else:
         return render(request, "invalid.html", {"error": status})
 
@@ -61,7 +64,8 @@ def get_builds(request, template='build_list.html'):
 def poll_builds(request):
     password, pipeline_url, username = get_config_from_session(request)
     download_cctray_xml(pipeline_url, username, password, get_file_name_per_session(request))
-    build_handles = read_selected_builds_from_xml(get_file_name_per_session(request), request.session.__getitem__('build_handles'))
+    build_handles = read_selected_builds_from_xml(get_file_name_per_session(request),
+                                                  request.session.__getitem__('build_handles'))
     set_session_with_build_handles(build_handles, request)
     return HttpResponseRedirect('/monitor/')
 
@@ -77,8 +81,7 @@ def name_status(build):
     return {"name": build['name'], "status": build['lastBuildStatus']}
 
 
-
 def show_builds(request, template='monitor.html'):
     build_handles = request.session.__getitem__('build_handles')
     build_handles = map(name_status, build_handles)
-    return render(request, template, {"build_handles": build_handles, "div_height": 100/build_handles.__len__() })
+    return render(request, template, {"build_handles": build_handles, "div_height": 100 / build_handles.__len__()})

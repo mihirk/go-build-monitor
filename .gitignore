@@ -1,2 +1,3 @@
 cctrays/*.xml
 *.pyc
+.idea/
