@@ -71,7 +71,7 @@ def poll_builds(request):
 
 
 def failed_builds(build):
-    if (build['lastBuildStatus'] == 'Success'):
+    if build['lastBuildStatus'] == 'Success':
         return False
     else:
         return True

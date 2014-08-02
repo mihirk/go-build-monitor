@@ -1,13 +1,16 @@
 import os
-from django.test import TestCase
-from logic.http_utils import create_file, download_cctray_xml, get_cctray_xml
-import httpretty
 import os.path
 import shutil
 
+from django.test import TestCase
+
+from logic.http_utils import create_file, download_cctray_xml, get_cctray_xml
+import httpretty
+
+
 class HTTPUtilsTest(TestCase):
     def setUp(self):
-        if(os.path.isdir("test")):
+        if (os.path.isdir("test")):
             pass
         else:
             os.mkdir("test")
@@ -50,7 +53,8 @@ class HTTPUtilsTest(TestCase):
         httpretty.enable()
         httpretty.register_uri(httpretty.GET, "http://cctray.com/.xml",
                                body=self.xml_content)
-        status = download_cctray_xml("http://cctray.com/.xml", username=None, password=None, file_name="test/download_file_name")
+        status = download_cctray_xml("http://cctray.com/.xml", username=None, password=None,
+                                     file_name="test/download_file_name")
         self.assertEqual("Success", status)
         self.assertTrue(os.path.isfile("test/download_file_name"))
         httpretty.disable()

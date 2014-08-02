@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
 
 
 class Migration(SchemaMigration):
-
     def forwards(self, orm):
         # Adding model 'Configuration'
         db.create_table(u'buildmonitor_configuration', (
@@ -21,7 +18,8 @@ class Migration(SchemaMigration):
         db.create_table(u'buildmonitor_buildstomonitor', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('build', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('configuration', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['buildmonitor.Configuration'])),
+            ('configuration',
+             self.gf('django.db.models.fields.related.ForeignKey')(to=orm['buildmonitor.Configuration'])),
         ))
         db.send_create_signal(u'buildmonitor', ['BuildsToMonitor'])
 
@@ -38,7 +36,8 @@ class Migration(SchemaMigration):
         u'buildmonitor.buildstomonitor': {
             'Meta': {'object_name': 'BuildsToMonitor'},
             'build': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
-            'configuration': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['buildmonitor.Configuration']"}),
+            'configuration': (
+            'django.db.models.fields.related.ForeignKey', [], {'to': u"orm['buildmonitor.Configuration']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         u'buildmonitor.configuration': {

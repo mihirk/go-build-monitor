@@ -41,18 +41,18 @@ jQuery(function ($, undefined) {
 
             if (build_config.pipeline_url === "") {
                 build_config.pipeline_url = validate_url(command, term);
-                if(build_config.pipeline_url != ""){
+                if (build_config.pipeline_url != "") {
                     insert_input_data('.url', build_config.pipeline_url);
                     term.set_prompt('Is authentication required (y/n) > ');
                 }
             }
-            else if(!is_authentication_required){
+            else if (!is_authentication_required) {
                 command = command.toLowerCase();
-                if(command === "y" || command === "yes"){
+                if (command === "y" || command === "yes") {
                     is_authentication_required = true;
                     term.set_prompt('Username > ');
                 }
-                else{
+                else {
                     insert_input_data('.username', "");
                     insert_input_data('.password', "");
                     $('.form').submit();

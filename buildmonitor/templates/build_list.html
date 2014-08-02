@@ -12,14 +12,16 @@
     <script src="{% static 'js/getbuilds.js' %}"></script>
 </head>
 <body>
-    <input type="hidden" id="all_builds" name="all_builds" value="{{ all_builds }}">
-    <h1 id="instructions">Please enter the build names to be monitored, leave blank to submit</h1>
-    <div class="build_list"></div>
-    <div id="build_form"></div>
-    <form class="form" action="/getbuilds/" method="post">
-        {% csrf_token %}
-        {{ build_form.as_p }}
-        <input type="submit" value="Submit"/>
-    </form>
+<input type="hidden" id="all_builds" name="all_builds" value="{{ all_builds }}">
+
+<h1 id="instructions">Please enter the build names to be monitored, leave blank to submit</h1>
+
+<div class="build_list"></div>
+<div id="build_form"></div>
+<form class="form" action="/getbuilds/" method="post">
+    {% csrf_token %}
+    {{ build_form.as_p }}
+    <input type="submit" value="Submit"/>
+</form>
 </body>
 </html>

@@ -9,14 +9,15 @@
     <script src="{% static 'js/jquery.terminal-min.js' %}"></script>
     <script src="{% static 'js/jquery.mousewheel-min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
-    </head>
+</head>
 <body>
-    <h4>Build Monitor Configuration</h4>
-    <div id="config_form"></div>
-    <form class="form" action="/config/" method="post">
-        {% csrf_token %}
-        {{ configuration_form.as_p }}
-        <input type="submit" value="Submit"/>
-    </form>
+<h4>Build Monitor Configuration</h4>
+
+<div id="config_form"></div>
+<form class="form" action="/config/" method="post">
+    {% csrf_token %}
+    {{ configuration_form.as_p }}
+    <input type="submit" value="Submit"/>
+</form>
 </body>
 </html>

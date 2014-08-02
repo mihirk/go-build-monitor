@@ -4,7 +4,7 @@ import urllib2
 import base64
 import httplib
 
-from xml_parser import  get_builds_to_monitor
+from xml_parser import get_builds_to_monitor
 
 
 poll_scheduler = sched.scheduler(time.time, time.sleep)
@@ -23,13 +23,14 @@ def get_attribs_of_builds_to_monitor(build_names, all_builds):
     build_names_to_monitor = build_names
     return filter(get_builds_to_monitor, all_builds)
 
+
 def save_cctray(cctray, file_name):
     create_file(file_name, cctray.read())
 
 
 def get_cctray_xml(password=None, url=None, username=None):
     request = urllib2.Request(url)
-    if(username and password):
+    if (username and password):
         base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
         request.add_header("Authorization", "Basic %s" % base64string)
     try:
@@ -46,11 +47,11 @@ def get_cctray_xml(password=None, url=None, username=None):
 
 
 def download_cctray_xml(url, username, password, file_name):
-    if(url[-4:] != ".xml"):
+    if (url[-4:] != ".xml"):
         return "Give the cctray url ending with .xml"
     else:
         cctray = get_cctray_xml(password, url, username)
-        if("Invalid Configuration : " in str(cctray)):
+        if ("Invalid Configuration : " in str(cctray)):
             return cctray
         else:
             save_cctray(cctray, file_name)

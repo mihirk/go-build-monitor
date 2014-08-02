@@ -14,20 +14,19 @@ urlpatterns = patterns('',
                         "django.views.static.serve",
                         {"document_root": settings.STATIC_ROOT}), )
 
-
 urlpatterns += patterns('',
-                       # Examples:
-                       # url(r'^$', 'buildmonitor.views.home', name='home'),
-                       # url(r'^buildmonitor/', include('buildmonitor.foo.urls')),
+                        # Examples:
+                        # url(r'^$', 'buildmonitor.views.home', name='home'),
+                        # url(r'^buildmonitor/', include('buildmonitor.foo.urls')),
 
-                       # Uncomment the admin/doc line below to enable admin documentation:
-                       url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+                        # Uncomment the admin/doc line below to enable admin documentation:
+                        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-                       # Uncomment the next line to enable the admin:
-                       url(r'^admin/', include(admin.site.urls)),
-                       url(r'^$', configuration_page),
-                       url(r'^config/$', configuration_page),
-                       url(r'^getbuilds/$', get_builds),
-                       url(r'^monitor/$', show_builds),
-                       url(r'^buffer/$', poll_builds),
+                        # Uncomment the next line to enable the admin:
+                        url(r'^admin/', include(admin.site.urls)),
+                        url(r'^$', configuration_page),
+                        url(r'^config/$', configuration_page),
+                        url(r'^getbuilds/$', get_builds),
+                        url(r'^monitor/$', show_builds),
+                        url(r'^buffer/$', poll_builds),
 )
