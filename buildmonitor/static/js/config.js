@@ -41,10 +41,8 @@ jQuery(function ($, undefined) {
 
             if (build_config.pipeline_url === "") {
                 build_config.pipeline_url = validate_url(command, term);
-                if (build_config.pipeline_url != "") {
-                    insert_input_data('.url', build_config.pipeline_url);
-                    term.set_prompt('Is authentication required (y/n) > ');
-                }
+                insert_input_data('.url', build_config.pipeline_url);
+                term.set_prompt('Is authentication required (y/n) > ');
             }
             else if (!is_authentication_required) {
                 command = command.toLowerCase();
