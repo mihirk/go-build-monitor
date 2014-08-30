@@ -27,9 +27,9 @@ class HTTPUtilsTest(TestCase):
         self.assertIsNotNone(test_handle)
         self.assertEqual("test_content", content)
 
-    def test_error_handling_for_non_xml_url(self):
-        error = download_cctray_xml(url="someurl", username=None, password=None, file_name=None)
-        self.assertEqual("Give the cctray url ending with .xml", error)
+    # def test_error_handling_for_non_xml_url(self):
+    #     error = download_cctray_xml(url="someurl", username=None, password=None, file_name=None)
+    #     self.assertEqual("Give the cctray url ending with .xml", error)
 
     def test_cctray_download(self):
         httpretty.enable()
