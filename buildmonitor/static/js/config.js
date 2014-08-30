@@ -17,13 +17,7 @@ jQuery(function ($, undefined) {
         var is_authentication_required = false;
 
         var validate_url = function (url, term) {
-            if (url.match(".xml$")) {
-                return url;
-            }
-            else {
-                term.error(url + " : Invalid URL CCTray XML URL required.");
-                return "";
-            }
+            return url;
         };
 
         var insert_input_data = function (input_field, value) {
